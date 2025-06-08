@@ -19,7 +19,7 @@ export const config = getDefaultConfig({
     sepolia,
     mainnet,
     // baseSepolia,
-    // ganacheChain
+    ganacheChain
     // polygon,
     // optimism,
     // arbitrum,
@@ -29,6 +29,6 @@ export const config = getDefaultConfig({
   ssr: false,
   transports: {
     [sepolia.id]: http(infura_sepolia),
-    // [ganacheChain.id] : http(ganache_sepolia),
+    [ganacheChain.id] : http(ganache_sepolia),
   },
 });

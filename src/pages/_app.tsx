@@ -11,7 +11,7 @@ import Layout from '../components/Layout';
 import { config } from '../wagmi';
 
 const client = new QueryClient();
-const lang =  'zh';
+const lang = 'zh';
 function MyApp({ Component, pageProps }: AppProps) {
   return (
 
@@ -20,7 +20,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <RainbowKitProvider >
           <Layout>
             <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={lang}>
-            <Component {...pageProps} />
+              <Component {...pageProps} />
             </LocalizationProvider>
           </Layout>
         </RainbowKitProvider>
