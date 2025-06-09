@@ -88,8 +88,8 @@ contract NFTSwap is IERC721Receiver {
         require(_nft.ownerOf(_tokenId) == address(this), "Invalid Order"); // NFT在合约中
         _nft.safeTransferFrom(address(this), msg.sender, _tokenId); // 将nft转回卖家
         _order.status = 2;
-        delete nftList[_nftAddr][_tokenId];
         emit Revoke(msg.sender, _nftAddr, _tokenId);
+        delete nftList[_nftAddr][_tokenId];
     }
 
     // 购买
@@ -106,8 +106,8 @@ contract NFTSwap is IERC721Receiver {
         if (msg.value > _order.price) {
             payable(msg.sender).transfer(msg.value - _order.price);
         }
-        delete nftList[_nftAddr][_tokenId];
         emit Buy(msg.sender, _nftAddr, _tokenId, _order.price);
+        delete nftList[_nftAddr][_tokenId];
     }
 
     function onERC721Received(

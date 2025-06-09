@@ -59,7 +59,7 @@ const Shop = () => {
     console.log(__queryList, '__queryList', _queryCancelList, _queryList);
     for (let i = 0; i < __queryList.length; i++) {
       // @ts-ignore
-      const _tokenURI = Number(_queryList[i].args[3]);
+      const _tokenURI = Number(__queryList[i].args[3]);
       const _data = await getIPFSData(tokenIPFSURI + "/" + _tokenURI, _tokenURI);
       _list.push(_data);
     }
