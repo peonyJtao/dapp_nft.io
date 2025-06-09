@@ -49,8 +49,10 @@ const Shop = () => {
     const _queryList = await contract.queryFilter('List', blockStartNumber, blockNumber.data);
     const _queryRevokeList = await contract.queryFilter('Revoke', blockStartNumber, blockNumber.data);
     const _queryBuyList = await contract.queryFilter('Buy', blockStartNumber, blockNumber.data);
+    // @ts-ignore
     const _queryCancelList = _queryBuyList.concat(_queryRevokeList)?.map(item => item?.args[0]);
     const __queryList = _queryCancelList.length ? _queryList.filter(item => 
+      // @ts-ignore
       !_queryCancelList.includes(item?.args[0])
     ) : _queryList;
     const _list: any[] = [];
