@@ -44,7 +44,8 @@ const CardItem = ({
 
   // @ts-ignore
   const owner = type === 'create' ? ownerOf.data : ownerOf?.data?.[0];
-  console.log(ownerOf.data, 'ownerOf');
+  console.log(owner, account.address, 'xxxxx');
+
   // @ts-ignore
   const initAmount = type === 'create' ? null : ownerOf?.data?.[1];
   return <>
@@ -78,10 +79,10 @@ const CardItem = ({
           {name.data}
         </H5>
       </Box>
-      {owner === account.address && <Button onClick={(e) => {
+      {(owner && owner === account.address) && <Button onClick={(e) => {
         e.stopPropagation();
         setOpen(true);
-      }}>{type === 'create' ? '出售' : '更新'}</Button>}
+      }}>{type === 'create' ? '出售' : '更新价格'}</Button>}
     </Card>
     <DialogSwap
       open={open}

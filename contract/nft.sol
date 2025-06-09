@@ -464,7 +464,7 @@ contract ERC721 is IERC721, IERC721Metadata {
     }
 }
 
-contract WTFApe is ERC721 {
+contract MyNFT is ERC721 {
     uint256 public MAX_APES = 10000; // 总量
     uint256 public totalSupply;
 

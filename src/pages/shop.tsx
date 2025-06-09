@@ -1,6 +1,6 @@
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
-import { useBlockNumber, useReadContract, useWriteContract } from "wagmi";
+import { useBlockNumber, useReadContract } from "wagmi";
 import { abi, contractAddress as address, nftAbi, nftAddress } from '../ABI';
 import { infura_sepolia } from '../infura';
 
@@ -8,10 +8,9 @@ import { Box, CircularProgress } from "@mui/material";
 import CardItem from '../components/CardItem';
 import FlexBox from "../components/FlexBox";
 const provider = new ethers.JsonRpcProvider(infura_sepolia);
-const blockStartNumber = 8495059; // 合约创建时的区块高度
+const blockStartNumber = 8508829; // 合约创建时的区块高度
 const ipfsUrl = `https://ipfs.io/ipfs/`;
 const Shop = () => {
-  const { writeContract } = useWriteContract();
   const [loading, setLoading] = useState(true);
   // const x = useReadContract({
   //   abi: nftAbi,
@@ -48,10 +47,17 @@ const Shop = () => {
     // 连接合约
     const contract = new ethers.Contract(nftAddress, nftAbi, provider);
     const _queryList = await contract.queryFilter('List', blockStartNumber, blockNumber.data);
+    const _queryRevokeList = await contract.queryFilter('Revoke', blockStartNumber, blockNumber.data);
+    const _queryBuyList = await contract.queryFilter('Buy', blockStartNumber, blockNumber.data);
+    const _queryCancelList = _queryBuyList.concat(_queryRevokeList)?.map(item => item?.args[0]);
+    const __queryList = _queryCancelList.length ? _queryList.filter(item => 
+      !_queryCancelList.includes(item?.args[0])
+    ) : _queryList;
     const _list: any[] = [];
-    for (let i = 0; i < _queryList.length; i++) {
+    console.log(__queryList, '__queryList', _queryCancelList, _queryList);
+    for (let i = 0; i < __queryList.length; i++) {
       // @ts-ignore
-      const _tokenURI = Number(_queryList[i].args[2]);
+      const _tokenURI = Number(_queryList[i].args[3]);
       const _data = await getIPFSData(tokenIPFSURI + "/" + _tokenURI, _tokenURI);
       _list.push(_data);
     }

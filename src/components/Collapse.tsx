@@ -5,25 +5,28 @@ import FlexBetween from './FlexBetween';
 import FlexBox from "./FlexBox";
 import { H5 } from "./Typography";
 
-const CollapseBox = ({ children, icon, title, open }: { open?: boolean, children?: React.ReactNode, icon: React.ReactNode, title?: string }) => {
+const CollapseBox = ({ children, icon, hasCollaps = true, title, open }: { hasCollaps?: boolean, open?: boolean, children?: React.ReactNode, icon?: React.ReactNode, title?: string }) => {
   const [collapseOpen, setCollapseOpen] = useState(open || false);
   return <>
     <FlexBetween sx={{
       padding: '12px 15px',
       // @ts-ignore
       cursor: 'pointer'
-    }} onClick={() => setCollapseOpen(!collapseOpen)}>
+    }} onClick={() => hasCollaps ? setCollapseOpen(!collapseOpen) : null}>
       <FlexBox sx={{
         alignItems: 'center',
+        gap: 2
       }}>
         {icon}
-        <H5 ml={2}>{title}</H5>
+        <H5 >{title}</H5>
       </FlexBox>
+      {
+        hasCollaps && <ExpandMoreIcon sx={{
+          transform: collapseOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+          transition: 'all 0.3s ease',
+        }} />
+      }
 
-      <ExpandMoreIcon sx={{
-        transform: collapseOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-        transition: 'all 0.3s ease',
-      }} />
     </FlexBetween>
     <Divider />
     <Collapse in={collapseOpen} timeout="auto" unmountOnExit>

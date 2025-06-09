@@ -10,7 +10,7 @@ import { H5 } from "./Typography";
 const DialogSwap = ({ open, record, name, onClose, initAmount, onSave, type = 'create' }: {
   open: boolean,
   onClose: () => void,
-  onSave: () => void,
+  onSave: (k?: any) => void,
   record: Record,
   name: string,
   type?: 'create' | 'update',
@@ -52,6 +52,7 @@ const DialogSwap = ({ open, record, name, onClose, initAmount, onSave, type = 'c
     }, {
       onSuccess: () => {
         setLoading(false);
+        onSave(ethers.parseEther(amount));
       },
       onError: () => {
         setLoading(false);
@@ -78,6 +79,7 @@ const DialogSwap = ({ open, record, name, onClose, initAmount, onSave, type = 'c
         }, {
           onSuccess: () => {
             setLoading(false);
+            onSave(ethers.parseEther(amount));
           },
           onError: () => {
             setLoading(false);
